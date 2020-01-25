@@ -7,7 +7,7 @@ class ListNode:
 
 class Solution:
 
-    def hasCycle(self, head: ListNode) -> bool:
+    def hasCycleSlow(self, head: ListNode) -> bool:
         memo = {}
         currentListNode = head
 
@@ -19,6 +19,22 @@ class Solution:
             currentListNode = currentListNode.next
 
         return memo.get(currentListNode) == True
+
+    def hasCycle(self, head: ListNode) -> bool:
+        # at the beginning there are two runners
+        # with different speed (X and 2X)
+        # if there are will be cycle, they will meet each other
+        tortoise = head  # X
+        hare = head  # 2X
+
+        while hare != None and hare.next != None and hare.next.next != None and tortoise != None and tortoise.next != None:
+            hare = hare.next.next
+            tortoise = tortoise.next
+
+            if tortoise == hare:
+                return True
+
+        return False
 
 
 my = Solution()
@@ -38,3 +54,7 @@ print(my.hasCycle(l0))
 
 # Runtime: 48 ms, faster than 63.86% of Python3 online submissions for Linked List Cycle.
 # Memory Usage: 15.9 MB, less than 100.00% of Python3 online submissions for Linked List Cycle.
+
+# Fast version
+# Runtime: 40 ms, faster than 95.93% of Python3 online submissions for Linked List Cycle.
+# Memory Usage: 16 MB, less than 100.00% of Python3 online submissions for Linked List Cycle.
